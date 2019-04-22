@@ -9,9 +9,9 @@ public class HttpHandlerFactory implements IBindFactory<IHttpHandler> {
 
     @Override
     public IHttpHandler create() {
-        if(ClassUtils.exists("org.apache.http.HttpEntity")) {
-            return new HttpClientHandler();
-        }
+//        if(ClassUtils.exists("org.apache.http.HttpEntity")) {
+//            return new HttpClientHandler();
+//        }
         return new HttpUrlConnectionHanddler();
     }
 }

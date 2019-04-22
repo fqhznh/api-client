@@ -81,6 +81,7 @@ public class HttpUrlConnectionHanddler extends AbstractHttpClient {
         if(conn == null) {
             return null;
         }
+        conn.addRequestProperty("Content-type", "application/json");
         conn.setDoInput(true);
         conn.setDoOutput(true);
         if(body != null) {
@@ -90,6 +91,7 @@ public class HttpUrlConnectionHanddler extends AbstractHttpClient {
             } else {
                 os.writeBytes(JsonUtils.toJson(body));
             }
+            os.flush();
         }
         return read(conn);
     }

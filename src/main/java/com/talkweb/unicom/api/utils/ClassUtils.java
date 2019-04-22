@@ -4,7 +4,7 @@ public class ClassUtils {
 
     public static boolean exists(String className) {
         try {
-            Class.forName(className);
+            System.out.println(Class.forName(className));
             return true;
         } catch (Exception e) {
             return false;
