@@ -31,11 +31,20 @@ public class GsonJsonHandler implements IJsonHandler {
 
     @Override
     public <T> T fromJson(String value, Class<T> clazz) {
+        if(value == null) {
+            return null;
+        }
+        if(clazz.isAssignableFrom(String.class)) {
+            return (T) value;
+        }
         return createGson(DEFAULT_DATE_FORMAT).fromJson(value, clazz);
     }
 
     @Override
     public <T> List<T> fromJsonList(String value, Class<T> clazz) {
+        if(value == null) {
+            return null;
+        }
         return createGson(DEFAULT_DATE_FORMAT).fromJson(value, new TypeToken<List<T>>(){}.getType());
     }
 }

@@ -48,6 +48,9 @@ public class JacksonJsonHandler implements IJsonHandler {
         if(value == null) {
             return null;
         }
+        if(clazz.isAssignableFrom(String.class)) {
+            return (T) value;
+        }
         try {
             return getMapper().readValue(value, clazz);
         } catch (Exception e) {

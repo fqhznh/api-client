@@ -29,6 +29,9 @@ public class FastJsonHandler implements IJsonHandler {
         if(value == null) {
             return null;
         }
+        if(clazz.isAssignableFrom(String.class)) {
+            return (T) value;
+        }
         return JSON.parseObject(value, clazz, SerializerFeature.WRITE_MAP_NULL_FEATURES);
     }
 
