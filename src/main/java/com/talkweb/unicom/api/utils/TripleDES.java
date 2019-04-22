@@ -1,6 +1,7 @@
 package com.talkweb.unicom.api.utils;
 
-import com.talkweb.unicom.api.client.exception.ApiException;
+
+import com.talkweb.unicom.api.exception.ApiException;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
