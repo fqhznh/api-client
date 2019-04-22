@@ -10,15 +10,16 @@ public class ApiClientTest {
     private static String secret = "d663bd873d93a76ab2ce11e9";
 
     private static String getUser(ApiClient.ApiClientImpl apiClient, String openId) throws Exception {
-        return apiClient.param("openId", "ojCvV0hmRcPa39xGckwKJQ8M6Wp8").get(url + "wx/user.do", String.class);
+        return apiClient.param("openId", openId).get(url + "wx/user.do", String.class);
     }
 
     private static String sendTemplateMessage(ApiClient.ApiClientImpl apiClient, String openId) throws Exception {
         String data = "{\"key1\":{\"value\":\"value1\"}, \"key2\":{\"value\":\"value2\"}}";
-        return apiClient.param("openId", "ojCvV0hmRcPa39xGckwKJQ8M6Wp8")
+        StringMap templateData = JsonUtils.fromJson(data, StringMap.class);
+        return apiClient.param("openId", openId)
                 .param("templateId", "11111")
                 .param("url", "http://www.baidu.com")
-                .post(url + "wx/sendTemplateMessage.do", JsonUtils.fromJson(data, StringMap.class), String.class);
+                .post(url + "wx/sendTemplateMessage.do", templateData, String.class);
     }
 
     public static void main(String[] args) throws Exception {
