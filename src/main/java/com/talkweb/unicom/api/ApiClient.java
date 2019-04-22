@@ -100,6 +100,15 @@ public class ApiClient {
             return null;
         }
 
+        public <T> List<T> getWithList(String url, Class<T> clazz) throws Exception {
+            if(httpHandler != null) {
+                doSign(null);
+                String result = httpHandler.get(url);
+                return resultWrapper.wrapperList(result, clazz);
+            }
+            return null;
+        }
+
         public <T> T post(String url, Object body, Class<T> clazz) throws Exception {
             if(httpHandler != null) {
                 String result = null;
@@ -117,12 +126,40 @@ public class ApiClient {
             return null;
         }
 
+        public <T> List<T> postWithList(String url, Object body, Class<T> clazz) throws Exception {
+            if(httpHandler != null) {
+                String result = null;
+                if(body == null) {
+                    doSign(null);
+                    result = httpHandler.post(url, body);
+                } else {
+                    String bodyStr = JsonUtils.toJson(body);
+                    String encodeBodyStr = TripleDES.encrypt(bodyStr, secret);
+                    doSign(encodeBodyStr);
+                    result = httpHandler.post(url, encodeBodyStr);
+                }
+                return resultWrapper.wrapperList(result, clazz);
+            }
+            return null;
+        }
+
         public <T> T postForm(String url, Class<T> clazz) throws Exception {
             if(httpHandler != null) {
                 doSign(null);
                 String result = httpHandler.postForm(url);
                 if(result != null) {
                     return resultWrapper.wrapper(result, clazz);
+                }
+            }
+            return null;
+        }
+
+        public <T> List<T> postFormWithList(String url, Class<T> clazz) throws Exception {
+            if(httpHandler != null) {
+                doSign(null);
+                String result = httpHandler.postForm(url);
+                if(result != null) {
+                    return resultWrapper.wrapperList(result, clazz);
                 }
             }
             return null;
